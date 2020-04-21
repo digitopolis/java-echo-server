@@ -1,12 +1,13 @@
-package com.github.digitopolis.socket;
+package com.github.digitopolis.echoserver.socket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
-import com.github.digitopolis.echoserver.socket.SocketCreator;
+import com.github.digitopolis.echoserver.EchoServer;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SocketCreatorTest {
     @Test
@@ -22,4 +23,10 @@ public class SocketCreatorTest {
         assertEquals(testSocket.getLocalPort(), 5555);
         testSocket.close();
     }
-}
+
+    @Test
+    public void testCreatesServerClientSocket() throws IOException {
+        MockServerSocket mockServerSocket = new MockServerSocket();
+        Socket clientSocket = SocketCreator.createServerClientSocket(mockServerSocket);
+        assertNotNull(clientSocket);
+    }

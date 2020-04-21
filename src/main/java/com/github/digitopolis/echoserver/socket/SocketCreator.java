@@ -8,4 +8,8 @@ public class SocketCreator {
     public static ServerSocket createServerSocket(int port) throws IOException {
         return new ServerSocket(port);
     }
+
+    public static Socket createServerClientSocket(ServerSocket serverSocket) throws IOException {
+        return serverSocket.accept();
+    }
 }
