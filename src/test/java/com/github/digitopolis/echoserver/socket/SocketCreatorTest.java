@@ -30,3 +30,13 @@ public class SocketCreatorTest {
         Socket clientSocket = SocketCreator.createServerClientSocket(mockServerSocket);
         assertNotNull(clientSocket);
     }
+
+    @Test
+    public void testCreatesNewClientSocket() throws IOException {
+        ServerSocket testSocket = SocketCreator.createServerSocket(8080);
+        Socket clientSocket = SocketCreator.createClientSocket("127.0.0.1", 8080);
+        assertEquals(clientSocket.getInetAddress().getHostAddress(), "127.0.0.1");
+        testSocket.close();
+        clientSocket.close();
+    }
+}

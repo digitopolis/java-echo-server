@@ -12,4 +12,9 @@ public class SocketCreator {
     public static Socket createServerClientSocket(ServerSocket serverSocket) throws IOException {
         return serverSocket.accept();
     }
+
+
+    public static Socket createClientSocket(String address, int port) throws IOException {
+        return new Socket(address, port);
+    }
 }
