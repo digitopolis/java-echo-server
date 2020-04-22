@@ -2,11 +2,11 @@ package com.github.digitopolis.socket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 import com.github.digitopolis.echoserver.socket.SocketCreator;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SocketCreatorTest {
     @Test
