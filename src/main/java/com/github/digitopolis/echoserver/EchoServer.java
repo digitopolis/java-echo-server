@@ -29,8 +29,16 @@ public class EchoServer {
                 cli.printMessage("Client connected!");
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        } catch (IOException e) {
+                echo();
+        } catch (Exception e) {
             cli.printMessage(e.getMessage());
+        }
+    }
+
+    public void echo() throws IOException {
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            out.println(inputLine);
         }
     }
 }

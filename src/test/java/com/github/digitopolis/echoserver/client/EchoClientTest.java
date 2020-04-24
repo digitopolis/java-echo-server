@@ -17,4 +17,12 @@ public class EchoClientTest {
         assertDoesNotThrow(() -> EchoClient.connect("127.0.0.1", 8080));
         testServer.close();
     }
+
+    @Test
+    public void sendsMessageAndReceivesEchoResponse() throws IOException {
+        EchoClient client = new EchoClient();
+        client.connect("127.0.0.1", 8080);
+        String response = client.sendMessage("hello");
+        assertEquals("hello", response);
+    }
 }

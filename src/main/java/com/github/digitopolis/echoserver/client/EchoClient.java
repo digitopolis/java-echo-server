@@ -10,25 +10,43 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class EchoClient {
-    private PrintWriter out;
-    private BufferedReader in;
+    private static Socket clientSocket;
+    private static PrintWriter out;
+    private static BufferedReader in;
     private static CLI cli = new CLI();
 
     public static void main(String[] args) {
         cli.printMessage("Please enter a port number:");
         String port = cli.getInput();
-        connect("127.0.0.1", Integer.parseInt(port));
+        try {
+            connect("127.0.0.1", Integer.parseInt(port));
+            chat();
+        } catch (IOException e) {
+            cli.printMessage("Please try again on an available port");
+        }
     }
 
-    public static void connect(String address, int port) {
-        try (
-                Socket clientSocket = SocketCreator.createClientSocket(address, port);
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
-        ) {
+    public static void connect(String address, int port) throws IOException {
+        try {
+            clientSocket = SocketCreator.createClientSocket(address, port);
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             cli.printMessage("Client connected at " + address + " on port " + port);
         } catch (IOException e) {
             cli.printMessage("Unable to connect at port " + port + ": " + e.getMessage());
+            throw e;
         }
+    }
+
+    public static void chat() throws IOException {
+        cli.printMessage("Send a message to the server:");
+        String message = cli.getInput();
+        String response = sendMessage(message);
+        cli.printMessage(response);
+    }
+
+    public static String sendMessage(String msg) throws IOException {
+        out.println(msg);
+        return in.readLine();
     }
 }
