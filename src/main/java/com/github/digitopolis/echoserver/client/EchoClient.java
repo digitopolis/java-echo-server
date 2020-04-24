@@ -31,4 +31,16 @@ public class EchoClient {
             cli.printMessage("Unable to connect at port " + port + ": " + e.getMessage());
         }
     }
+
+    public static void chat() throws IOException {
+        cli.printMessage("Send a message to the server:");
+        String message = cli.getInput();
+        String response = sendMessage(message);
+        cli.printMessage(response);
+    }
+
+    public static String sendMessage(String msg) throws IOException {
+        out.println(msg);
+        return in.readLine();
+    }
 }
