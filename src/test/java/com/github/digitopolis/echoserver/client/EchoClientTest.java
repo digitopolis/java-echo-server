@@ -44,8 +44,8 @@ public class EchoClientTest {
     }
 
     @Test
-    public void test1000ClientConnections() throws IOException {
-        for (int i = 0; i < 1000; i++) {
+    public void test5000ClientConnections() throws IOException {
+        for (int i = 0; i < 5000; i++) {
             EchoClient client = new EchoClient();
             client.connect("127.0.0.1", 5000);
         }
