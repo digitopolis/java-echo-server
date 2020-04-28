@@ -21,8 +21,18 @@ public class EchoClientTest {
     @Test
     public void sendsMessageAndReceivesEchoResponse() throws IOException {
         EchoClient client = new EchoClient();
-        client.connect("127.0.0.1", 8080);
+        client.connect("127.0.0.1", 5000);
         String response = client.sendMessage("hello");
         assertEquals("hello", response);
+    }
+
+    @Test
+    public void multipleClientsConnectOnPort() throws IOException {
+        EchoClient client1 = new EchoClient();
+        EchoClient client2 = new EchoClient();
+        EchoClient client3 = new EchoClient();
+        client1.connect("127.0.0.1", 5000);
+        assertDoesNotThrow(() -> client2.connect("127.0.0.1", 5000));
+        assertDoesNotThrow(() -> client3.connect("127.0.0.1", 5000));
     }
 }
