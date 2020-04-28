@@ -21,7 +21,7 @@ public class EchoClient {
         try {
             connect("127.0.0.1", Integer.parseInt(port));
             chat();
-        } catch (IOException e) {
+        } catch (Exception e) {
             cli.printMessage("Please try again on an available port");
         }
     }
@@ -32,17 +32,20 @@ public class EchoClient {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             cli.printMessage("Client connected at " + address + " on port " + port);
-        } catch (IOException e) {
+        } catch (Exception e) {
             cli.printMessage("Unable to connect at port " + port + ": " + e.getMessage());
             throw e;
         }
     }
 
     public static void chat() throws IOException {
+        String message, response = "";
         cli.printMessage("Send a message to the server:");
-        String message = cli.getInput();
-        String response = sendMessage(message);
-        cli.printMessage(response);
+        while (!response.equals("Goodbye")){
+            message = cli.getInput();
+            response = sendMessage(message);
+            cli.printMessage(response);
+        }
     }
 
     public static String sendMessage(String msg) throws IOException {
