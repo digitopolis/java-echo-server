@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,6 +17,12 @@ public class EchoClientTest {
         final EchoClient echoClient = new EchoClient();
         assertDoesNotThrow(() -> EchoClient.connect("127.0.0.1", 8080));
         testServer.close();
+    }
+
+    @Test
+    public void throwsErrorWhenServerNotAvailable() throws IOException {
+        final EchoClient echoClient = new EchoClient();
+        assertThrows(IOException.class, () -> echoClient.connect("127.0.0.1", 5000));
     }
 
     @Test
@@ -34,5 +41,13 @@ public class EchoClientTest {
         client1.connect("127.0.0.1", 5000);
         assertDoesNotThrow(() -> client2.connect("127.0.0.1", 5000));
         assertDoesNotThrow(() -> client3.connect("127.0.0.1", 5000));
+    }
+
+    @Test
+    public void test1000ClientConnections() throws IOException {
+        for (int i = 0; i < 1000; i++) {
+            EchoClient client = new EchoClient();
+            client.connect("127.0.0.1", 5000);
+        }
     }
 }

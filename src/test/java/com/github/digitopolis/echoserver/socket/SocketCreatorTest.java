@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.github.digitopolis.echoserver.EchoServer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SocketCreatorTest {
     @Test
@@ -15,6 +15,11 @@ public class SocketCreatorTest {
         ServerSocket testSocket = SocketCreator.createServerSocket(8080);
         assertNotNull(testSocket);
         testSocket.close();
+    }
+
+    @Test
+    public void testThrowsErrorWhenUnableToCreateSocket() {
+        assertThrows(Exception.class, () -> SocketCreator.createServerSocket(999999));
     }
 
     @Test
